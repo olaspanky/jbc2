@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
-
+import logo from "../../../public/emlogo1.png"
 // Define props interface for type safety
 interface WhoWeAreProps {}
 
@@ -44,7 +44,7 @@ const WhoWeAre: React.FC<WhoWeAreProps> = () => {
               <div className="relative inline-block mb-8">
                 <div className="absolute inset-0 bg-white/10 rounded-full blur-lg motion-safe:animate-pulse"></div>
                 <Image
-                  src="/images/college-logo.png" // Ensure this path exists in /public
+                  src={logo} // Ensure this path exists in /public
                   alt="Jericho Businessmen Club Official Logo"
                   width={160}
                   height={160}
@@ -61,7 +61,7 @@ const WhoWeAre: React.FC<WhoWeAreProps> = () => {
 
             {isMounted && (
               <div className="space-y-6 animate-[fadeInUp_1s_ease-out]">
-                <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight">
+                <h1 className="text-5xl 2xl:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent leading-tight">
                   Who We Are
                 </h1>
                 <div className="w-24 h-1 bg-gradient-to-r from-yellow-400 to-orange-500 mx-auto rounded-full"></div>
