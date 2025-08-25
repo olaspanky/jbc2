@@ -1,44 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 
 // Define the shape of each value
 interface Value {
   title: string;
   description: string;
-  color: string; // Tailwind color class for background gradient
+  icon: string;
+  accent: string;
 }
 
-// Define the values data
+// Define the values data with professional styling
 const values: Value[] = [
   {
     title: 'Aim',
-    description:
-      'To empower Ibadan professionals to drive sustainable economic growth and community transformation through collaboration and innovation.',
-    color: 'from-blue-600 to-blue-900',
+    description: 'To empower Ibadan professionals to drive sustainable economic growth and community transformation through collaboration and innovation.',
+    icon: '🎯',
+    accent: 'from-slate-600 to-slate-800'
   },
   {
     title: 'Vision',
-    description:
-      'To be the leading business club in Ibadan, fostering a vibrant ecosystem of professionals dedicated to excellence and positive change.',
-    color: 'from-purple-600 to-purple-900',
+    description: 'To be the leading business club in Ibadan, fostering a vibrant ecosystem of professionals dedicated to excellence and positive change.',
+    icon: '👁️',
+    accent: 'from-blue-600 to-blue-800'
   },
   {
     title: 'Mission',
-    description:
-      'To connect, inspire, and support Ibadans professionals through networking, resources, and impactful initiatives for community development.',
-    color: 'from-yellow-500 to-orange-600',
+    description: 'To connect, inspire, and support Ibadan professionals through networking, resources, and impactful initiatives for community development.',
+    icon: '🚀',
+    accent: 'from-emerald-600 to-emerald-800'
   },
   {
     title: 'Vow',
-    description:
-      'We pledge to uphold integrity, inclusivity, and innovation in all our endeavors, transforming Ibadan for generations to come.',
-    color: 'from-green-600 to-teal-900',
+    description: 'We pledge to uphold integrity, inclusivity, and innovation in all our endeavors, transforming Ibadan for generations to come.',
+    icon: '🤝',
+    accent: 'from-amber-600 to-amber-800'
   },
 ];
 
 const ValuesCard: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [viewedValues, setViewedValues] = useState<boolean[]>(Array(values.length).fill(false));
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   // Track viewed values
   useEffect(() => {
@@ -49,112 +51,161 @@ const ValuesCard: React.FC = () => {
     });
   }, [currentIndex]);
 
-  // Handle manual navigation
-  const handleSelect = (index: number) => {
-    setCurrentIndex(index);
+  // Auto-switch to the next value every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isTransitioning) {
+        const newIndex = (currentIndex + 1) % values.length;
+        handleTransition(newIndex);
+      }
+    }, 5000); // 5 seconds
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(timer);
+  }, [currentIndex, isTransitioning]);
+
+  const handleTransition = (newIndex: number) => {
+    if (newIndex === currentIndex || isTransitioning) return;
+
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentIndex(newIndex);
+      setIsTransitioning(false);
+    }, 150);
   };
 
   const handlePrevious = () => {
-    setCurrentIndex(currentIndex === 0 ? values.length - 1 : currentIndex - 1);
+    const newIndex = currentIndex === 0 ? values.length - 1 : currentIndex - 1;
+    handleTransition(newIndex);
   };
 
   const handleNext = () => {
-    setCurrentIndex((currentIndex + 1) % values.length);
+    const newIndex = (currentIndex + 1) % values.length;
+    handleTransition(newIndex);
   };
 
   const allViewed = viewedValues.every((viewed) => viewed);
+  const currentValue = values[currentIndex];
 
   return (
-    <section className="relative min-h-screen flex bg-white items-center justify-center  overflow-hidden">
-      {/* Full-screen Background Effect */}
-     
-      {/* Card */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-5xl md:text-6xl font-bold text-center text-black mb-8">
-          Our Core Values
-        </h2>
-
-        <div className="relative">
-          <div
-            className={`relative bg-gradient-to-br ${values[currentIndex].color} rounded-3xl shadow-2xl p-8 md:p-12 w-full text-black overflow-hidden min-h-[500px] flex items-center justify-center transition-all duration-500 ease-out`}
-          >
-            {/* Decorative Background Pattern */}
-            <div 
-              className="absolute inset-0 bg-black/20" 
-              style={{
-                background: 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent)'
-              }}
-            />
-
-            {/* Content */}
-            <div className="relative z-10 text-center">
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 transform transition-all duration-500">
-                {values[currentIndex].title}
-              </h3>
-              <p className="text-lg md:text-xl max-w-2xl mx-auto transform transition-all duration-500">
-                {values[currentIndex].description}
-              </p>
-            </div>
-
-            {/* Navigation Arrows */}
-            <button
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300 z-20 hover:scale-110"
-              onClick={handlePrevious}
-              aria-label="Previous value"
-            >
-              <ChevronLeft size={28} className="text-gray-800" />
-            </button>
-            <button
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300 z-20 hover:scale-110"
-              onClick={handleNext}
-              aria-label="Next value"
-            >
-              <ChevronRight size={28} className="text-gray-800" />
-            </button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-slate-600 to-slate-800 rounded-full mb-6 shadow-lg">
+            <div className="text-2xl text-white">⭐</div>
           </div>
+          <h1 className="text-4xl md:text-6xl font-light text-slate-800 mb-4 tracking-tight">
+            Our Core Values
+          </h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-slate-600 to-slate-800 mx-auto rounded-full"></div>
         </div>
-
-        {/* Tabs for Manual Selection */}
-        <div className="flex justify-center space-x-4 mt-6">
-          {values.map((value, index) => (
-            <button
-              key={index}
-              className={`px-6 py-3 rounded-full text-base font-semibold transition-all duration-300 hover:scale-105 ${
-                currentIndex === index
-                  ? 'bg-white text-gray-900'
-                  : 'bg-white/20 text-black hover:bg-white/40'
-              }`}
-              onClick={() => handleSelect(index)}
-              aria-label={`View ${value.title}`}
-            >
-              {value.title}
-            </button>
-          ))}
-        </div>
-
-        {/* Progress Indicator */}
-        <div className="flex justify-center mt-8">
-          <div className="flex space-x-2">
-            {values.map((_, index) => (
-              <div
+        <div className="flex justify-center mt-12">
+          <div className="inline-flex bg-slate-100 rounded-full p-2 shadow-lg">
+            {values.map((value, index) => (
+              <button
                 key={index}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  viewedValues[index] ? 'bg-yellow-400' : 'bg-white/30'
+                className={`relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-slate-600 ${
+                  currentIndex === index
+                    ? 'bg-white text-slate-800 shadow-md'
+                    : 'text-slate-600 hover:text-slate-800 hover:bg-white/50'
                 }`}
-              />
+                onClick={() => handleTransition(index)}
+                aria-label={`View ${value.title}`}
+              >
+                <span className="flex items-center space-x-2">
+                  <span>{value.title}</span>
+                  {viewedValues[index] && (
+                    <CheckCircle size={16} className="text-green-600" />
+                  )}
+                </span>
+              </button>
             ))}
           </div>
         </div>
-      </div>
 
-      {/* Message to explore all values */}
-      {!allViewed && (
-        <div className="absolute bottom-8 left-0 right-0 text-center text-black/80 text-lg">
-          Explore all values to continue
+        {/* Main Card Container */}
+        <div className="relative">
+          {/* Background Card */}
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl transform rotate-1 opacity-20"></div>
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-xl transform -rotate-1 opacity-30"></div>
+
+          {/* Main Card */}
+          <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200/50">
+            {/* Accent Bar */}
+            <div className={`h-2 bg-gradient-to-r ${currentValue.accent}`}></div>
+
+            {/* Content Container */}
+            <div className="relative p-8 md:p-12 lg:p-16">
+              {/* Content */}
+              <div
+                className={`text-center transition-all duration-300 ${
+                  isTransitioning ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
+                }`}
+              >
+                {/* Icon */}
+                <div className="text-6xl md:text-7xl mb-8 opacity-80">{currentValue.icon}</div>
+
+                {/* Title */}
+                <h2 className="text-3xl md:text-5xl font-light text-slate-800 mb-8 tracking-wide">
+                  {currentValue.title}
+                </h2>
+
+                {/* Description */}
+                <div className="max-w-4xl mx-auto">
+                  <p className="text-lg md:text-xl text-slate-600 leading-relaxed font-light">
+                    {currentValue.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-    </section>
+
+      
+
+        {/* Completion Status */}
+       
+      </div>
+    </div>
   );
 };
+
+// Add custom styles for animations
+const styles = `
+  @keyframes fade-in {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  /* Custom scrollbar for better aesthetics */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #64748b;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+  }
+`;
+
+// Inject styles into the document
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+}
 
 export default ValuesCard;

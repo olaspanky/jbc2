@@ -23,6 +23,7 @@ import {
 import Navbar from './components/Navbar';
 import JerichoSummitBanner from './components/Header';
 import ValuesCard from './components/ValuesCard';
+import WhoWeAre from './components/Wwa';
 
 interface NavItem {
   href: string;
@@ -119,6 +120,63 @@ const HomePage: React.FC = () => {
       {/* Navigation */}
       <Navbar/>
       <JerichoSummitBanner/>
+      <WhoWeAre/>
+          <section id="programs" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Our Programs
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Initiatives designed to empower our community and create lasting impact
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {programs.map((program) => (
+              <div key={program.id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
+                <div className="p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    {program.icon}
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      program.status === 'Applications Open' 
+                        ? 'bg-green-100 text-green-800'
+                        : program.status === 'Coming Soon'
+                        ? 'bg-purple-100 text-purple-800'
+                        : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {program.status}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">
+                    {program.title}
+                  </h3>
+                  
+                  <p className="text-gray-600 mb-6">
+                    {program.description}
+                  </p>
+                  
+                 
+                  
+                  <button className="mb-6 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform group-hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
+                    Learn More
+                    <ChevronRight size={16} />
+                  </button>
+
+                   {program.deadline && (
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 ">
+                      <p className="text-sm text-red-800">
+                        <strong>Deadline:</strong> {program.deadline}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <ValuesCard/>
  
 
@@ -181,60 +239,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Programs Section */}
-      <section id="programs" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Programs
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Initiatives designed to empower our community and create lasting impact
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programs.map((program) => (
-              <div key={program.id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    {program.icon}
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      program.status === 'Applications Open' 
-                        ? 'bg-green-100 text-green-800'
-                        : program.status === 'Coming Soon'
-                        ? 'bg-purple-100 text-purple-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {program.status}
-                    </span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    {program.title}
-                  </h3>
-                  
-                  <p className="text-gray-600 mb-6">
-                    {program.description}
-                  </p>
-                  
-                  {program.deadline && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
-                      <p className="text-sm text-red-800">
-                        <strong>Deadline:</strong> {program.deadline}
-                      </p>
-                    </div>
-                  )}
-                  
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform group-hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
-                    Learn More
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  
 
       {/* Events Section */}
       <section id="events" className="py-20 bg-white">
@@ -281,7 +286,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Membership Section */}
-      <section id="membership" className="py-20 bg-gradient-to-br from-blue-900 to-purple-900">
+      {/* <section id="membership" className="py-20 bg-gradient-to-br from-blue-900 to-purple-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -320,7 +325,7 @@ const HomePage: React.FC = () => {
             Apply for Membership
           </button>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
       <section id="contact" className="py-20 bg-gray-50">
