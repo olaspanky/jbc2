@@ -17,20 +17,24 @@ export default function JBCIbadan() {
   const [execSlideIndex, setExecSlideIndex] = useState(0);
   const execSliderRef = useRef<HTMLDivElement>(null);
 
+  // Reset slide and start auto-play on mount
+  useEffect(() => {
+    setCurrentSlide(0); // Always start from first slide
+
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, []); // Empty array = run once on mount
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Executive Slider Auto-scroll (optional)
+  // Executive Slider Auto-scroll
   useEffect(() => {
     const interval = setInterval(() => {
       setExecSlideIndex((prev) => 
@@ -45,19 +49,19 @@ export default function JBCIbadan() {
       title: "Jericho Businessmen Club Ibadan",
       subtitle: "Empowering Professionals, Building Communities",
       description: "Like-minded professionals and technocrats of Ibadan origin for mutual economic development",
-      image: "./images/j1.jpg"
+      image: "/images/j1.jpg"
     },
     {
       title: "Making Impact Together",
       subtitle: "Driving Economic Growth & Development",
       description: "Impacting public policy discourse for the benefit of our people in Ibadan",
-      image: "./images/j2.jpg"
+      image: "/images/j2.jpg"
     },
     {
       title: "Join Our Community",
       subtitle: "Be Part of Something Greater",
       description: "Connect with fellow professionals and contribute to Ibadan's development",
-      image: "./images/j3.jpg"
+      image: "/images/j3.jpg"
     }
   ];
 
@@ -116,17 +120,16 @@ export default function JBCIbadan() {
   ];
 
   const executiveCommittee = [
-    // { name: "Olooye Adegboyega Taofeek Adegoke", position: "President", description: "Fellow of the Institute of Chartered Accountants of Nigeria (FCA) and successful entrepreneur", img: "./images/presido.jpg" },
-    { name: "Mr. Tunji Waheed Gafaar", position: "Vice President", img: "./images/twg.jpg"  },
-    { name: "Mr. Olatunde Akeem Adisa", position: "General Secretary", img: "./images/oaa.jpg"  },
-    { name: "Dr. Adeyemi Sanni", position: "Financial Secretary", img: "./images/das.jpg"  },
-    { name: "Mr. Ademola Adedeji", position: "Assistant General Secretary", img: "./images/maa.jpg"  },
-    { name: "Mr. Olukunle Opawale", position: "Publicity Secretary", img: "./images/moo.jpg"  },
-    { name: "Mr. Adewale Oyeniyi", position: "Social Secretary", img: "./images/mooye.jpg"  },
-    { name: "Mr. Wasiu Ola Abiola", position: "Assistant Social Secretary", img: "./images/woa.jpg"  },
-    { name: "Oloye Olukunle Oyewole", position: "Legal Adviser", img: "./images/ooo.jpg"  },
-    { name: "Mr. Akinwale Akinola", position: "Chief Whip", img: "./images/maa.jpg"  },
-    { name: "Oloye Remi Ibrahim Babalola", position: "Immediate Past President", img: "./images/orib.jpg"  }
+    { name: "Mr. Tunji Waheed Gafaar", position: "Vice President", img: "/images/twg.jpg" },
+    { name: "Mr. Olatunde Akeem Adisa", position: "General Secretary", img: "/images/oaa.jpg" },
+    { name: "Dr. Adeyemi Sanni", position: "Financial Secretary", img: "/images/das.jpg" },
+    { name: "Mr. Ademola Adedeji", position: "Assistant General Secretary", img: "/images/maa.jpg" },
+    { name: "Mr. Olukunle Opawale", position: "Publicity Secretary", img: "/images/moo.jpg" },
+    { name: "Mr. Adewale Oyeniyi", position: "Social Secretary", img: "/images/mooye.jpg" },
+    { name: "Mr. Wasiu Ola Abiola", position: "Assistant Social Secretary", img: "/images/woa.jpg" },
+    { name: "Oloye Olukunle Oyewole", position: "Legal Adviser", img: "/images/ooo.jpg" },
+    { name: "Mr. Akinwale Akinola", position: "Chief Whip", img: "/images/maa.jpg" },
+    { name: "Oloye Remi Ibrahim Babalola", position: "Immediate Past President", img: "/images/orib.jpg" }
   ];
 
   const recentNews = [
@@ -221,25 +224,21 @@ export default function JBCIbadan() {
     setExecSlideIndex(prev => Math.min(totalExecSlides - 1, prev + 1));
   };
 
-
   return (
     <div className="min-h-screen bg-white font-sans">
-      {/* Sticky Navigation */}
-   
-
       {/* Hero Slider Section */}
       <section className="relative h-screen overflow-hidden">
         <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
             <div
-              key={index}
+              key={slide.image} // Critical: Forces re-render of background
               className={`absolute inset-0 transition-opacity duration-1000 ${
                 index === currentSlide ? 'opacity-100' : 'opacity-0'
               }`}
             >
               {/* Background Image */}
               <div 
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-center bg-gray-200"
                 style={{ backgroundImage: `url(${slide.image})` }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
@@ -286,11 +285,11 @@ export default function JBCIbadan() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`transition-all duration-300 ${
+              className={`transition-all duration-300 rounded-full ${
                 index === currentSlide 
                   ? 'w-12 h-3 bg-[#1466ff]' 
                   : 'w-3 h-3 bg-white/50 hover:bg-white/80'
-              } rounded-full`}
+              }`}
             />
           ))}
         </div>
@@ -394,7 +393,7 @@ export default function JBCIbadan() {
       </section>
 
       {/* Leadership Section */}
-     <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
+      <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Meet Our President</h2>
@@ -404,15 +403,17 @@ export default function JBCIbadan() {
           </div>
 
           <div className="bg-white rounded-3xl shadow-2xl overflow-hidden md:flex">
-            {/* Image */}
             <div className="md:w-5/12 relative overflow-hidden bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] p-8 md:p-12 flex items-center justify-center">
-               <img src="./images/presido.jpg" alt="JBC President" className="w-56 h-56 md:w-72 md:h-72 object-cover rounded-full border-4 border-white shadow-lg" />
+              <img 
+                src="/images/presido.jpg" 
+                alt="JBC President" 
+                className="w-56 h-56 md:w-72 md:h-72 object-cover rounded-full border-4 border-white shadow-lg"
+              />
               <p className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white font-semibold text-lg">
                 Olooye Adegboyega Taofeek Adegoke
               </p>
             </div>
 
-            {/* Content */}
             <div className="md:w-7/12 p-8 md:p-12">
               <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                 President, Jericho Businessmen Club Ibadan
@@ -458,7 +459,7 @@ export default function JBCIbadan() {
         </div>
       </section>
 
-      {/* === EXECUTIVE COMMITTEE SLIDER === */}
+      {/* Executive Committee Slider */}
       <section id="exco" className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -469,23 +470,21 @@ export default function JBCIbadan() {
           </div>
 
           <div className="relative">
-            {/* Slider Controls */}
             <button
               onClick={scrollExecLeft}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all disabled:opacity-50"
               disabled={execSlideIndex === 0}
             >
               <ChevronLeft size={24} className="text-[#1466ff]" />
             </button>
             <button
               onClick={scrollExecRight}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all disabled:opacity-50"
               disabled={execSlideIndex === totalExecSlides - 1}
             >
               <ChevronRightIcon size={24} className="text-[#1466ff]" />
             </button>
 
-            {/* Slider Container */}
             <div className="overflow-hidden" ref={execSliderRef}>
               <div 
                 className="flex transition-transform duration-500 ease-in-out gap-6"
@@ -497,21 +496,21 @@ export default function JBCIbadan() {
                     className="flex-shrink-0 w-full md:w-1/3 px-2"
                   >
                     <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
-                      <div className="bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] w-32 h-32 rounded-full flex items-center justify-center mb-4 text-white text-xl font-bold mx-auto group-hover:scale-110 transition-transform">
-<img src={member.img} alt={member.name} className="w-32 h-32 object-cover rounded-full border-2 border-white shadow-md" />
+                      <div className="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full border-4 border-white shadow-md">
+                        <img 
+                          src={member.img} 
+                          alt={member.name} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
                       </div>
                       <h3 className="text-lg font-bold text-gray-900 text-center mb-1">{member.name}</h3>
                       <p className="text-[#1466ff] font-semibold text-center mb-2 text-sm">{member.position}</p>
-                      {member.description && (
-                        <p className="text-gray-600 text-center text-xs italic">{member.description}</p>
-                      )}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Dot Indicators */}
             <div className="flex justify-center mt-8 space-x-2">
               {Array.from({ length: totalExecSlides }).map((_, i) => (
                 <button
@@ -528,7 +527,8 @@ export default function JBCIbadan() {
           </div>
         </div>
       </section>
-      {/* News & Events Section */}
+
+      {/* News & Events */}
       <section id="news" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
@@ -586,7 +586,7 @@ export default function JBCIbadan() {
         </div>
       </section>
 
-      {/* Photo Gallery Section */}
+      {/* Photo Gallery */}
       <section className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -628,7 +628,7 @@ export default function JBCIbadan() {
         </div>
       </section>
 
-      {/* Contact CTA Section */}
+      {/* Contact CTA */}
       <section id="contact" className="py-20 bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -661,8 +661,6 @@ export default function JBCIbadan() {
         </div>
       </section>
 
-      {/* Footer */}
-     
       <style jsx>{`
         .bg-grid-pattern {
           background-image: 
@@ -672,14 +670,8 @@ export default function JBCIbadan() {
         }
 
         @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .animate-fade-in {
