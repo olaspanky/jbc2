@@ -1,234 +1,584 @@
-// pages/index.tsx
-"use client"
-import React, { useState } from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { 
-  ChevronRight, 
-  Users, 
-  Target, 
-  Award, 
-  Calendar,
-  MapPin,
-  Mail,
-  Phone,
-  Menu,
-  X,
-  ArrowRight,
-  Star,
-  Building2,
-  GraduationCap,
-  HandHeart
+  Menu, X, ChevronRight, MapPin, Mail, Phone, 
+  Users, Target, Eye, Heart, Facebook, Twitter, 
+  Instagram, Linkedin, ArrowRight, Calendar,
+  Award, Building2, GraduationCap, Activity,
+  ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
-import Navbar from './components/Navbar';
-import JerichoSummitBanner from './components/Header';
-import ValuesCard from './components/ValuesCard';
 
-interface NavItem {
-  href: string;
-  label: string;
-}
+export default function JBCIbadan() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('aim');
+  const [scrolled, setScrolled] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [execSlideIndex, setExecSlideIndex] = useState(0);
+  const execSliderRef = useRef<HTMLDivElement>(null);
 
-interface Program {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  status: string;
-  deadline?: string;
-}
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-interface Event {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  description: string;
-}
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
-const HomePage: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  // Executive Slider Auto-scroll (optional)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setExecSlideIndex((prev) => 
+        prev >= executiveCommittee.length - visibleExecCards ? 0 : prev + 1
+      );
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const navItems: NavItem[] = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#programs', label: 'Programs' },
-    { href: '#events', label: 'Events' },
-    { href: '#membership', label: 'Membership' },
-    { href: '#contact', label: 'Contact' }
-  ];
-
-  const programs: Program[] = [
+  const heroSlides = [
     {
-      id: 'scholarship',
-      title: 'JBC Scholarship Scheme',
-      description: 'Supporting educational excellence among Ibadan youth with financial assistance for qualified students.',
-      icon: <GraduationCap className="w-8 h-8 text-blue-600" />,
-      status: 'Applications Open',
-      deadline: 'May 30, 2025'
+      title: "Jericho Businessmen Club Ibadan",
+      subtitle: "Empowering Professionals, Building Communities",
+      description: "Like-minded professionals and technocrats of Ibadan origin for mutual economic development",
+      image: "./images/j1.jpg"
     },
     {
-      id: 'empowerment',
-      title: 'Empowerment Scheme',
-      description: 'Providing financial support to traders and artisans of Ibadan origin since November 2013.',
-      icon: <HandHeart className="w-8 h-8 text-green-600" />,
-      status: 'Ongoing',
+      title: "Making Impact Together",
+      subtitle: "Driving Economic Growth & Development",
+      description: "Impacting public policy discourse for the benefit of our people in Ibadan",
+      image: "./images/j2.jpg"
     },
     {
-      id: 'summit',
-      title: 'JBC Annual Summit',
-      description: 'Bringing together entrepreneurs, policymakers, and changemakers to address socio-economic challenges.',
-      icon: <Building2 className="w-8 h-8 text-purple-600" />,
-      status: 'Coming Soon',
+      title: "Join Our Community",
+      subtitle: "Be Part of Something Greater",
+      description: "Connect with fellow professionals and contribute to Ibadan's development",
+      image: "./images/j3.jpg"
     }
   ];
 
-  const upcomingEvents: Event[] = [
-    {
-      id: '1',
-      title: 'JBC Annual Summit 2025',
-      date: 'Coming Soon',
-      location: 'Ibadan, Oyo State',
-      description: 'Annual gathering of business leaders and policymakers'
+  const tabs = [
+    { 
+      id: 'aim', 
+      label: 'Aim', 
+      icon: Target,
+      content: "To promote the economic, social, and cultural development of Ibadan and its environs through collaborative efforts of like-minded professionals and technocrats."
     },
-    {
-      id: '2',
-      title: 'Monthly General Meeting',
-      date: 'Last Thursday of Every Month',
-      location: 'JBC Secretariat, Ibadan',
-      description: 'Regular members meeting and networking session'
+    { 
+      id: 'vision', 
+      label: 'Vision', 
+      icon: Eye,
+      content: "To be the foremost organization championing sustainable development and economic prosperity for Ibadan and its people."
+    },
+    { 
+      id: 'mission', 
+      label: 'Mission', 
+      icon: Users,
+      content: "To bring together professionals and technocrats of Ibadan origin to foster mutual economic development, influence positive public policy, and create lasting impact in our community."
+    },
+    { 
+      id: 'vow', 
+      label: 'Vow', 
+      icon: Heart,
+      content: "We pledge our unwavering commitment to the development of Ibadan, promising to work tirelessly for the economic empowerment and social advancement of our people."
     }
   ];
 
-  const objectives: string[] = [
-    "Network with like-minded professionals of Ibadan extraction for mutual economic development",
-    "Impact public policy discourse for the benefit of Ibadan people",
-    "Be the club of first choice for Ibadan sons committed to transformation",
-    "Attract high quality professionals and leverage collective capital for development"
+  const initiatives = [
+    {
+      icon: Activity,
+      title: "Health Centres Support",
+      description: "Supporting healthcare infrastructure and services across Ibadan communities",
+      link: "/health-centres"
+    },
+    {
+      icon: Award,
+      title: "Empowerment Scheme",
+      description: "Established in November 2013 to provide financial support to traders and artisans of Ibadan origin",
+      link: "/empowerment"
+    },
+    {
+      icon: GraduationCap,
+      title: "Scholarship Scheme",
+      description: "Established October 26, 2006. Giving back to society and helping those with genuine educational needs",
+      link: "/scholarship"
+    },
+    {
+      icon: Building2,
+      title: "Annual Socio-economic Summit",
+      description: "Bringing together stakeholders to discuss and advance Ibadan's economic development",
+      link: "/summit"
+    }
   ];
+
+  const executiveCommittee = [
+    // { name: "Olooye Adegboyega Taofeek Adegoke", position: "President", description: "Fellow of the Institute of Chartered Accountants of Nigeria (FCA) and successful entrepreneur", img: "./images/presido.jpg" },
+    { name: "Mr. Tunji Waheed Gafaar", position: "Vice President", img: "./images/twg.jpg"  },
+    { name: "Mr. Olatunde Akeem Adisa", position: "General Secretary", img: "./images/oaa.jpg"  },
+    { name: "Dr. Adeyemi Sanni", position: "Financial Secretary", img: "./images/das.jpg"  },
+    { name: "Mr. Ademola Adedeji", position: "Assistant General Secretary", img: "./images/maa.jpg"  },
+    { name: "Mr. Olukunle Opawale", position: "Publicity Secretary", img: "./images/moo.jpg"  },
+    { name: "Mr. Adewale Oyeniyi", position: "Social Secretary", img: "./images/mooye.jpg"  },
+    { name: "Mr. Wasiu Ola Abiola", position: "Assistant Social Secretary", img: "./images/woa.jpg"  },
+    { name: "Oloye Olukunle Oyewole", position: "Legal Adviser", img: "./images/ooo.jpg"  },
+    { name: "Mr. Akinwale Akinola", position: "Chief Whip", img: "./images/maa.jpg"  },
+    { name: "Oloye Remi Ibrahim Babalola", position: "Immediate Past President", img: "./images/orib.jpg"  }
+  ];
+
+  const recentNews = [
+    {
+      title: "JBC Awards Scholarships to Ibadan Indigenes Studying at Various Universities",
+      date: "2024-01-15",
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+      excerpt: "Twenty scholarship beneficiaries went home with a cheque of one hundred thousand Naira each."
+    },
+    {
+      title: "First Bank GMD Bags JBC Award",
+      date: "2023-11-20",
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
+      excerpt: "The Group Managing Director, First Bank of Nigeria, Sola Adeduntan, has bagged the President Outstanding Personality Award."
+    },
+    {
+      title: "3,500 Benefit from Jericho Business Club's Soft Loans",
+      date: "2023-10-10",
+      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
+      excerpt: "About 3,500 indigenes of Ibadan have benefited from soft loans through about three hundred and thirty million Naira."
+    },
+    {
+      title: "JBC delegates visit Honourable Minister of Power, Chief Adebayo Adelabu",
+      date: "2023-09-04",
+      image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&h=300&fit=crop",
+      excerpt: "JBC delegates visit Honourable Minister of Power, Chief Adebayo Adelabu"
+    },
+    {
+      title: "Inter-Club Relationship Enhancement",
+      date: "2022-08-15",
+      image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=300&fit=crop",
+      excerpt: "A novel idea brought about by JBC administration (2020 - 2022). We were able to visit 3 leading Clubs in Ibadan."
+    },
+    {
+      title: "JBC Annual Youth Innovation Challenge 2024",
+      date: "2024-03-20",
+      image: "https://images.unsplash.com/photo-1573167243872-43c6433b9d40?w=400&h=300&fit=crop",
+      excerpt: "Empowering young minds and fostering innovation among Ibadan youth"
+    }
+  ];
+
+  const photoGallery = [
+    { 
+      title: "Second Edition JBC Annual Socio-Economic Summit", 
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop" 
+    },
+    { 
+      title: "JBC Annual Youth Innovation Challenge 2024", 
+      image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&h=600&fit=crop" 
+    },
+    { 
+      title: "JBC Awards Scholarships to Ibadan Indigenes", 
+      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop" 
+    },
+    { 
+      title: "JBC delegates visit Honourable Minister of Power", 
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" 
+    }
+  ];
+
+  const footerLinks = {
+    about: [
+      { label: "Who We Are", href: "/who-we-are" },
+      { label: "Meet JBC President", href: "/president" },
+      { label: "Executive Office Holders", href: "/excos" },
+      { label: "Board of Trustees", href: "/board-of-trustees" },
+      { label: "Featured Members", href: "/featured-jbc-member" },
+      { label: "Past Executive Holders", href: "/past-excos" }
+    ],
+    initiatives: [
+      { label: "Health Centres Support", href: "/health-centres" },
+      { label: "Empowerment Scheme", href: "/empowerment" },
+      { label: "Scholarship Scheme", href: "/scholarship" }
+    ],
+    resources: [
+      { label: "JBC Anthem", href: "/jbc-anthem" },
+      { label: "Photo Gallery", href: "/photos" },
+      { label: "Become a Member", href: "/how-to-become-a-member" },
+      { label: "News & Events", href: "/events" }
+    ]
+  };
+
+  // Slider settings
+  const visibleExecCards = 3;
+  const totalExecSlides = Math.ceil(executiveCommittee.length / visibleExecCards);
+
+  const scrollExecLeft = () => {
+    setExecSlideIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const scrollExecRight = () => {
+    setExecSlideIndex(prev => Math.min(totalExecSlides - 1, prev + 1));
+  };
+
 
   return (
-    <>
-      <Head>
-        <title>Jericho Businessmen Club - Transforming Ibadan Through Excellence</title>
-        <meta name="description" content="Premier business club for Ibadan professionals committed to economic development and community transformation." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <div className="min-h-screen bg-white font-sans">
+      {/* Sticky Navigation */}
+   
 
-      {/* Navigation */}
-      <Navbar/>
-      <JerichoSummitBanner/>
-      <ValuesCard/>
- 
+      {/* Hero Slider Section */}
+      <section className="relative h-screen overflow-hidden">
+        <div className="absolute inset-0">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {/* Background Image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative h-full flex items-center">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                  <div className="max-w-3xl">
+                    <h2 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
+                      {slide.title}
+                    </h2>
+                    <p className="text-2xl md:text-3xl text-[#c6ddff] mb-4 font-semibold">
+                      {slide.subtitle}
+                    </p>
+                    <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
+                      {slide.description}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <a 
+                        href="#about" 
+                        className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
+                      >
+                        Learn More
+                        <ChevronRight size={20} className="ml-2" />
+                      </a>
+                      <a 
+                        href="#contact" 
+                        className="bg-white/10 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-lg hover:bg-white hover:text-[#1466ff] transition-all duration-300 font-semibold inline-flex items-center justify-center"
+                      >
+                        Join Us Today
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-  
+        {/* Slide Indicators */}
+        <div className="absolute bottom-8 left-0 right-0 flex justify-center space-x-3 z-10">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'w-12 h-3 bg-[#1466ff]' 
+                  : 'w-3 h-3 bg-white/50 hover:bg-white/80'
+              } rounded-full`}
+            />
+          ))}
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronRight className="text-white rotate-90" size={32} />
+        </div>
+      </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-white">
+      <section id="about" className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              About JBC
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The epitome of professional excellence and community development in Ibadan
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About JBC Ibadan</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Uniting professionals and technocrats for the economic and social development of Ibadan
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  To be the club of first choice for Ibadan sons committed to transforming 
-                  Ibadan land into the epitome of development in Nigeria.
-                </p>
+          <div className="grid lg:grid-cols-4 gap-4 mb-12">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`p-6 rounded-2xl transition-all duration-300 text-left ${
+                    activeTab === tab.id
+                      ? 'bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] text-white shadow-xl scale-105'
+                      : 'bg-white text-gray-700 hover:shadow-lg hover:scale-102'
+                  }`}
+                >
+                  <Icon size={32} className="mb-3" />
+                  <h3 className="font-bold text-lg">{tab.label}</h3>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl">
+            {tabs.map((tab) => (
+              <div
+                key={tab.id}
+                className={`transition-all duration-500 ${
+                  activeTab === tab.id ? 'block' : 'hidden'
+                }`}
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="bg-gradient-to-br from-[#c6ddff] to-[#1466ff]/20 w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0">
+                    {React.createElement(tab.icon, { size: 32, className: "text-[#1466ff]" })}
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{tab.label}</h3>
+                    <p className="text-lg text-gray-700 leading-relaxed">{tab.content}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Initiatives Section */}
+      <section id="initiatives" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Initiatives</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Making meaningful impact through targeted programs and community development projects
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {initiatives.map((initiative, index) => {
+              const Icon = initiative.icon;
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100"
+                >
+                  <div className="bg-gradient-to-br from-[#c6ddff] to-[#1466ff]/20 w-16 h-16 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Icon size={32} className="text-[#1466ff]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#1466ff] transition-colors">
+                    {initiative.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{initiative.description}</p>
+                  <a 
+                    href={initiative.link}
+                    className="text-[#1466ff] font-semibold flex items-center group-hover:gap-2 transition-all"
+                  >
+                    Learn More
+                    <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership Section */}
+     <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Meet Our President</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Leadership that inspires growth, excellence, and community impact
+            </p>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden md:flex">
+            {/* Image */}
+            <div className="md:w-5/12 relative overflow-hidden bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] p-8 md:p-12 flex items-center justify-center">
+               <img src="./images/presido.jpg" alt="JBC President" className="w-56 h-56 md:w-72 md:h-72 object-cover rounded-full border-4 border-white shadow-lg" />
+              <p className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white font-semibold text-lg">
+                Olooye Adegboyega Taofeek Adegoke
+              </p>
+            </div>
+
+            {/* Content */}
+            <div className="md:w-7/12 p-8 md:p-12">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                President, Jericho Businessmen Club Ibadan
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                A business executive and financial management professional with rich and diverse experience in the Oil and Gas industry, Financial Services, Audit and Assurance. An enterprising leader with sound organizational skills, Fellow of the Institute of Chartered Accountants of Nigeria (FCA), and alumnus of OAU Ile-Ife and Cambridge Judge Business School (Advanced Leadership Programme).
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Born on 4th February 1964, he is the Mogaji of Abase Family of Oke Gege, Ibadan and currently the Aare-onibon Balogun of Ibadanland. With over 30 years of hands-on experience in financial and strategic management, organizational restructuring, mergers & acquisitions, and business turnaround.
+              </p>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Education</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>✓ B.Agric Economics, OAU Ile-Ife (1992)</li>
+                    <li>✓ Executive Education, Heriot-Watt (2004)</li>
+                    <li>✓ Lean Sigma, University of Oxford (2005)</li>
+                    <li>✓ Advanced Leadership, Cambridge (2014)</li>
+                    <li>✓ FCA, ICAN (2012)</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-bold text-gray-900 mb-2">Key Roles</h4>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li>✓ CFO, Oando Energy Services (2010–2016)</li>
+                    <li>✓ Executive Director, OES Energy Services</li>
+                    <li>✓ Chairman, Aweni Homes & Properties</li>
+                    <li>✓ Director, Multiple Energy & Financial Firms</li>
+                  </ul>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  To attract high quality professionals and business persons and leverage 
-                  their collective social and economic capital to mobilise resources for 
-                  both the development of Ibadan land and members of the club.
-                </p>
-              </div>
+              <a 
+                href="/jbc/president"
+                className="inline-flex items-center bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-xl transition-all duration-300"
+              >
+                See Full Profile
+                <ArrowRight size={18} className="ml-2" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl">
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">Our Commitment</h4>
-                <p className="text-gray-700 italic">
-                  "Ibadan a gbe wa o. Amin" - Jericho Businessmen Club continues to live by 
-                  its objectives with greater efforts devoted to the upliftment of Ibadan's 
-                  economic, social and political landscape.
-                </p>
+      {/* === EXECUTIVE COMMITTEE SLIDER === */}
+      <section id="exco" className="py-20 bg-[#f3f3f3]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Executive Committee</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Meet the distinguished leaders driving JBC's vision forward
+            </p>
+          </div>
+
+          <div className="relative">
+            {/* Slider Controls */}
+            <button
+              onClick={scrollExecLeft}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all"
+              disabled={execSlideIndex === 0}
+            >
+              <ChevronLeft size={24} className="text-[#1466ff]" />
+            </button>
+            <button
+              onClick={scrollExecRight}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all"
+              disabled={execSlideIndex === totalExecSlides - 1}
+            >
+              <ChevronRightIcon size={24} className="text-[#1466ff]" />
+            </button>
+
+            {/* Slider Container */}
+            <div className="overflow-hidden" ref={execSliderRef}>
+              <div 
+                className="flex transition-transform duration-500 ease-in-out gap-6"
+                style={{ transform: `translateX(-${execSlideIndex * (100 / visibleExecCards)}%)` }}
+              >
+                {executiveCommittee.map((member, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-full md:w-1/3 px-2"
+                  >
+                    <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group h-full">
+                      <div className="bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] w-32 h-32 rounded-full flex items-center justify-center mb-4 text-white text-xl font-bold mx-auto group-hover:scale-110 transition-transform">
+<img src={member.img} alt={member.name} className="w-32 h-32 object-cover rounded-full border-2 border-white shadow-md" />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900 text-center mb-1">{member.name}</h3>
+                      <p className="text-[#1466ff] font-semibold text-center mb-2 text-sm">{member.position}</p>
+                      {member.description && (
+                        <p className="text-gray-600 text-center text-xs italic">{member.description}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-gray-900">Our Objectives</h3>
-              {objectives.map((objective, index) => (
-                <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                  <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                    <Target size={16} className="text-white" />
-                  </div>
-                  <p className="text-gray-700">{objective}</p>
-                </div>
+            {/* Dot Indicators */}
+            <div className="flex justify-center mt-8 space-x-2">
+              {Array.from({ length: totalExecSlides }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setExecSlideIndex(i)}
+                  className={`transition-all duration-300 rounded-full ${
+                    i === execSlideIndex 
+                      ? 'w-10 h-3 bg-[#1466ff]' 
+                      : 'w-3 h-3 bg-gray-300 hover:bg-gray-500'
+                  }`}
+                />
               ))}
             </div>
           </div>
         </div>
       </section>
-
-      {/* Programs Section */}
-      <section id="programs" className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
+      {/* News & Events Section */}
+      <section id="news" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Our Programs
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Initiatives designed to empower our community and create lasting impact
-            </p>
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News & Events</h2>
+              <p className="text-lg text-gray-600">Stay updated with our recent activities and announcements</p>
+            </div>
+            <a 
+              href="/events" 
+              className="hidden md:flex items-center text-[#1466ff] font-semibold hover:gap-2 transition-all"
+            >
+              View All
+              <ArrowRight size={20} className="ml-1" />
+            </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programs.map((program) => (
-              <div key={program.id} className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group">
-                <div className="p-8">
-                  <div className="flex items-center justify-between mb-6">
-                    {program.icon}
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      program.status === 'Applications Open' 
-                        ? 'bg-green-100 text-green-800'
-                        : program.status === 'Coming Soon'
-                        ? 'bg-purple-100 text-purple-800'
-                        : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {program.status}
-                    </span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recentNews.map((news, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer border border-gray-100"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={news.image} 
+                    alt={news.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center text-sm text-gray-500 mb-3">
+                    <Calendar size={16} className="mr-2" />
+                    {new Date(news.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}
                   </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">
-                    {program.title}
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#1466ff] transition-colors">
+                    {news.title}
                   </h3>
-                  
-                  <p className="text-gray-600 mb-6">
-                    {program.description}
-                  </p>
-                  
-                  {program.deadline && (
-                    <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
-                      <p className="text-sm text-red-800">
-                        <strong>Deadline:</strong> {program.deadline}
-                      </p>
-                    </div>
-                  )}
-                  
-                  <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transform group-hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2">
-                    Learn More
-                    <ChevronRight size={16} />
-                  </button>
+                  <p className="text-gray-600 mb-4 leading-relaxed">{news.excerpt}</p>
+                  <a 
+                    href="#" 
+                    className="text-[#1466ff] font-semibold flex items-center group-hover:gap-2 transition-all"
+                  >
+                    Read More
+                    <ArrowRight size={18} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </a>
                 </div>
               </div>
             ))}
@@ -236,224 +586,106 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Events Section */}
-      <section id="events" className="py-20 bg-white">
+      {/* Photo Gallery Section */}
+      <section className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Events & Activities
-            </h2>
-            <p className="text-xl text-gray-600">
-              Stay connected with our upcoming events and activities
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Photos</h2>
+            <p className="text-lg text-gray-600">
+              Capturing moments from our events and activities
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {upcomingEvents.map((event) => (
-              <div key={event.id} className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                    <Calendar size={24} className="text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
-                      {event.title}
+          <div className="grid md:grid-cols-2 gap-6">
+            {photoGallery.map((photo, index) => (
+              <div
+                key={index}
+                className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+              >
+                <div className="aspect-video relative overflow-hidden">
+                  <img 
+                    src={photo.image} 
+                    alt={photo.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent group-hover:from-[#1466ff]/80 transition-all flex items-end justify-center p-6">
+                    <h3 className="text-white text-xl font-bold text-center transform group-hover:scale-110 transition-transform">
+                      {photo.title}
                     </h3>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <Calendar size={16} />
-                        <span>{event.date}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-gray-600">
-                        <MapPin size={16} />
-                        <span>{event.location}</span>
-                      </div>
-                    </div>
-                    <p className="text-gray-700">
-                      {event.description}
-                    </p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <a 
+              href="/photos" 
+              className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-xl transition-all duration-300 font-semibold inline-flex items-center"
+            >
+              View Full Gallery
+              <ArrowRight size={20} className="ml-2" />
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Membership Section */}
-      <section id="membership" className="py-20 bg-gradient-to-br from-blue-900 to-purple-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Join Our Community
-            </h2>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Be part of Ibadan's most prestigious business network and contribute to our city's transformation
+      {/* Contact CTA Section */}
+      <section id="contact" className="py-20 bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="max-w-4xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Get In Touch</h2>
+            <p className="text-xl mb-10 text-[#c6ddff]">
+              Have questions or want to learn more about joining JBC? We'd love to hear from you.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users size={32} className="text-white" />
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all">
+                <MapPin size={32} className="mx-auto mb-3" />
+                <h3 className="font-semibold mb-2">Location</h3>
+                <p className="text-[#c6ddff] text-sm">Ibadan, Oyo State, Nigeria</p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Network</h3>
-              <p className="text-blue-100">Connect with like-minded professionals</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award size={32} className="text-white" />
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all">
+                <Mail size={32} className="mx-auto mb-3" />
+                <h3 className="font-semibold mb-2">Email</h3>
+                <p className="text-[#c6ddff] text-sm">info@jbcibadan.org</p>
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Excellence</h3>
-              <p className="text-blue-100">Maintain highest professional standards</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target size={32} className="text-white" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Impact</h3>
-              <p className="text-blue-100">Create meaningful change in our community</p>
-            </div>
-          </div>
-
-          <button className="bg-gradient-to-r from-yellow-500 to-orange-600 text-white px-12 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transform hover:scale-105 transition-all duration-200">
-            Apply for Membership
-          </button>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Get in Touch
-            </h2>
-            <p className="text-xl text-gray-600">
-              Ready to join us or have questions? We'd love to hear from you
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <MapPin size={20} className="text-blue-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900">Address</h4>
-                      <p className="text-gray-600">Jericho, Ibadan, Oyo State, Nigeria</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                      <Phone size={20} className="text-green-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900">Phone</h4>
-                      <p className="text-gray-600">+234 XXX XXX XXXX</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <Mail size={20} className="text-purple-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900">Email</h4>
-                      <p className="text-gray-600">info@jbcibadan.org</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all">
+                <Phone size={32} className="mx-auto mb-3" />
+                <h3 className="font-semibold mb-2">Phone</h3>
+                <p className="text-[#c6ddff] text-sm">+234 XXX XXX XXXX</p>
               </div>
             </div>
-
-            <div className="bg-white rounded-2xl shadow-lg p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h3>
-              <form className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Subject"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <textarea
-                  rows={4}
-                  placeholder="Your Message"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                ></textarea>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200">
-                  Send Message
-                </button>
-              </form>
-            </div>
+            <button className="bg-white text-[#1466ff] px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold">
+              Contact Us Today
+            </button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">JBC</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold">Jericho Businessmen Club</h3>
-                  <p className="text-gray-400 text-sm">Ibadan</p>
-                </div>
-              </div>
-              <p className="text-gray-400 mb-4 max-w-md">
-                Transforming Ibadan through professional excellence, community development, and strategic partnerships.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-              <div className="space-y-2">
-                {navItems.slice(1).map((item) => (
-                  <a key={item.href} href={item.href} className="block text-gray-400 hover:text-white transition-colors">
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Programs</h4>
-              <div className="space-y-2">
-                <a href="#" className="block text-gray-400 hover:text-white transition-colors">Scholarship Scheme</a>
-                <a href="#" className="block text-gray-400 hover:text-white transition-colors">Empowerment Program</a>
-                <a href="#" className="block text-gray-400 hover:text-white transition-colors">Annual Summit</a>
-                <a href="#" className="block text-gray-400 hover:text-white transition-colors">Member Benefits</a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p className="text-gray-400">
-              &copy; 2025 Jericho Businessmen Club. All rights reserved. | Ibadan a gbe wa o. Amin
-            </p>
-          </div>
-        </div>
-      </footer>
-    </>
-  );
-};
+     
+      <style jsx>{`
+        .bg-grid-pattern {
+          background-image: 
+            linear-gradient(to right, rgb(255 255 255 / 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgb(255 255 255 / 0.1) 1px, transparent 1px);
+          background-size: 40px 40px;
+        }
 
-export default HomePage;
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+      `}</style>
+    </div>
+  );
+}
