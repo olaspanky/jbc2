@@ -1,21 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { recentNews } from "@/app/constants/news";
 
-type Props = {
+type SingleNewsProps = {
   params: { slug: string };
 };
 
-export default function SingleNewsPage({ params }: Props) {
+export default function SingleNewsPage({ params }: SingleNewsProps) {
   const router = useRouter();
 
-  const post = recentNews.find(
-    (item) => item.slug === params.slug
-  );
+  const post = recentNews.find((item) => item.slug === params.slug);
 
-  if (!post) return notFound();
+  if (!post) return <p>Post not found</p>;
 
   return (
     <article className="py-20 bg-white">
@@ -35,7 +33,6 @@ export default function SingleNewsPage({ params }: Props) {
 
         {/* Meta */}
         <div className="flex gap-4 text-sm text-black mb-8">
-      
           <span>{post.date}</span>
         </div>
 
