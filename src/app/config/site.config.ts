@@ -15,9 +15,9 @@ export const siteConfig = {
         { label: 'Projects & Activities', href: '/jbc/about?section=projects' }
       ]
     },
-    { label: 'Initiatives', href: '/jbc/initiatives' },
-    { label: 'News', href: '/jbc/news' },
-    { label: 'Contact', href: '/jbc/contact' }
+    { label: 'Gallery', href: '/jbc/gallery' },
+    { label: 'News', href: '/jbc/blog' },
+    { label: 'Contact', href: '#' }
   ],
 
   socialLinks: [

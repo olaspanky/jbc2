@@ -8,6 +8,7 @@ import {
   Award, Building2, GraduationCap, Activity,
   ChevronLeft, ChevronRight as ChevronRightIcon
 } from 'lucide-react';
+import { recentNews } from './constants/news';
 
 export default function JBCIbadan() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -132,62 +133,18 @@ export default function JBCIbadan() {
     { name: "Oloye Remi Ibrahim Babalola", position: "Immediate Past President", img: "/images/orib.jpg" }
   ];
 
-  const recentNews = [
-    {
-      title: "JBC Awards Scholarships to Ibadan Indigenes Studying at Various Universities",
-      date: "2024-01-15",
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
-      excerpt: "Twenty scholarship beneficiaries went home with a cheque of one hundred thousand Naira each."
-    },
-    {
-      title: "First Bank GMD Bags JBC Award",
-      date: "2023-11-20",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop",
-      excerpt: "The Group Managing Director, First Bank of Nigeria, Sola Adeduntan, has bagged the President Outstanding Personality Award."
-    },
-    {
-      title: "3,500 Benefit from Jericho Business Club's Soft Loans",
-      date: "2023-10-10",
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
-      excerpt: "About 3,500 indigenes of Ibadan have benefited from soft loans through about three hundred and thirty million Naira."
-    },
-    {
-      title: "JBC delegates visit Honourable Minister of Power, Chief Adebayo Adelabu",
-      date: "2023-09-04",
-      image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&h=300&fit=crop",
-      excerpt: "JBC delegates visit Honourable Minister of Power, Chief Adebayo Adelabu"
-    },
-    {
-      title: "Inter-Club Relationship Enhancement",
-      date: "2022-08-15",
-      image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=400&h=300&fit=crop",
-      excerpt: "A novel idea brought about by JBC administration (2020 - 2022). We were able to visit 3 leading Clubs in Ibadan."
-    },
-    {
-      title: "JBC Annual Youth Innovation Challenge 2024",
-      date: "2024-03-20",
-      image: "https://images.unsplash.com/photo-1573167243872-43c6433b9d40?w=400&h=300&fit=crop",
-      excerpt: "Empowering young minds and fostering innovation among Ibadan youth"
-    }
-  ];
+ 
 
   const photoGallery = [
     { 
       title: "Second Edition JBC Annual Socio-Economic Summit", 
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=600&fit=crop" 
+      image: "/jbchead.png" 
     },
     { 
       title: "JBC Annual Youth Innovation Challenge 2024", 
-      image: "https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&h=600&fit=crop" 
+      image: "/jbcbg4.jpg" 
     },
-    { 
-      title: "JBC Awards Scholarships to Ibadan Indigenes", 
-      image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop" 
-    },
-    { 
-      title: "JBC delegates visit Honourable Minister of Power", 
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop" 
-    }
+
   ];
 
   const footerLinks = {
@@ -537,7 +494,7 @@ export default function JBCIbadan() {
               <p className="text-lg text-gray-600">Stay updated with our recent activities and announcements</p>
             </div>
             <a 
-              href="/events" 
+              href="/jbc/blog" 
               className="hidden md:flex items-center text-[#1466ff] font-semibold hover:gap-2 transition-all"
             >
               View All
@@ -573,7 +530,7 @@ export default function JBCIbadan() {
                   </h3>
                   <p className="text-gray-600 mb-4 leading-relaxed">{news.excerpt}</p>
                   <a 
-                    href="#" 
+                  href={`/jbc/blog/${news.slug}`}
                     className="text-[#1466ff] font-semibold flex items-center group-hover:gap-2 transition-all"
                   >
                     Read More
@@ -618,7 +575,7 @@ export default function JBCIbadan() {
           </div>
           <div className="text-center mt-10">
             <a 
-              href="/photos" 
+              href="/jbc/gallery" 
               className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-xl transition-all duration-300 font-semibold inline-flex items-center"
             >
               View Full Gallery
