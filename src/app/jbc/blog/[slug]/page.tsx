@@ -3,15 +3,17 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { recentNews } from "@/app/constants/news";
+import { use } from "react";
 
 type SingleNewsProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default function SingleNewsPage({ params }: SingleNewsProps) {
   const router = useRouter();
+  const { slug } = use(params);
 
-  const post = recentNews.find((item) => item.slug === params.slug);
+  const post = recentNews.find((item) => item.slug === slug);
 
   if (!post) return <p>Post not found</p>;
 
