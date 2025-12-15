@@ -181,6 +181,18 @@ export default function JBCIbadan() {
     setExecSlideIndex(prev => Math.min(totalExecSlides - 1, prev + 1));
   };
 
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveTab((current) => {
+      const currentIndex = tabs.findIndex(tab => tab.id === current);
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      return tabs[nextIndex].id;
+    });
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, [tabs]);
+
   return (
     <div className="min-h-screen bg-white font-sans">
       {/* Hero Slider Section */}
@@ -258,58 +270,58 @@ export default function JBCIbadan() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-[#f3f3f3]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About JBC Ibadan</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Uniting professionals and technocrats for the economic and social development of Ibadan
-            </p>
-          </div>
 
-          <div className="grid lg:grid-cols-4 gap-4 mb-12">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`p-6 rounded-2xl transition-all duration-300 text-left ${
-                    activeTab === tab.id
-                      ? 'bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] text-white shadow-xl scale-105'
-                      : 'bg-white text-gray-700 hover:shadow-lg hover:scale-102'
-                  }`}
-                >
-                  <Icon size={32} className="mb-3" />
-                  <h3 className="font-bold text-lg">{tab.label}</h3>
-                </button>
-              );
-            })}
-          </div>
+<section id="about" className="py-20 bg-[#f3f3f3]">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About JBC Ibadan</h2>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+        Uniting professionals and technocrats for the economic and social development of Ibadan
+      </p>
+    </div>
 
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl">
-            {tabs.map((tab) => (
-              <div
-                key={tab.id}
-                className={`transition-all duration-500 ${
-                  activeTab === tab.id ? 'block' : 'hidden'
-                }`}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="bg-gradient-to-br from-[#c6ddff] to-[#1466ff]/20 w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0">
-                    {React.createElement(tab.icon, { size: 32, className: "text-[#1466ff]" })}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{tab.label}</h3>
-                    <p className="text-lg text-gray-700 leading-relaxed">{tab.content}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+    <div className="grid lg:grid-cols-4 gap-4 mb-12">
+      {tabs.map((tab) => {
+        const Icon = tab.icon;
+        return (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`p-6 rounded-2xl transition-all duration-300 text-left ${
+              activeTab === tab.id
+                ? 'bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] text-white shadow-xl scale-105'
+                : 'bg-white text-gray-700 hover:shadow-lg hover:scale-102'
+            }`}
+          >
+            <Icon size={32} className="mb-3" />
+            <h3 className="font-bold text-lg">{tab.label}</h3>
+          </button>
+        );
+      })}
+    </div>
+
+    <div className="bg-white rounded-2xl p-8 md:p-12 shadow-xl">
+      {tabs.map((tab) => (
+        <div
+          key={tab.id}
+          className={`transition-all duration-500 ${
+            activeTab === tab.id ? 'block' : 'hidden'
+          }`}
+        >
+          <div className="flex items-start space-x-4">
+            <div className="bg-gradient-to-br from-[#c6ddff] to-[#1466ff]/20 w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0">
+              {React.createElement(tab.icon, { size: 32, className: "text-[#1466ff]" })}
+            </div>
+            <div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{tab.label}</h3>
+              <p className="text-lg text-gray-700 leading-relaxed">{tab.content}</p>
+            </div>
           </div>
         </div>
-      </section>
-
+      ))}
+    </div>
+  </div>
+</section>
       {/* Initiatives Section */}
       <section id="initiatives" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

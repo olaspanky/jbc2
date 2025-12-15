@@ -10,11 +10,11 @@ type GalleryImage = {
   tag: string;
 };
 
-type SectionType = "mixed" | "2024" | "earlier";
+type SectionType = "mixed" | "2025" | "2024" | "earlier";
 
 /* ================= HELPERS ================= */
 const generateImages = (
-  folder: "bc25" | "bcimg",
+  folder: "bc25" | "bcimg" | "jbc25",
   count: number,
   tag: string
 ): GalleryImage[] => {
@@ -31,9 +31,10 @@ const shuffleArray = (images: GalleryImage[]): GalleryImage[] => {
 };
 
 /* ================= DATA ================= */
+const jbc25Images = generateImages("jbc25", 30, "2025");
 const bc25Images = generateImages("bc25", 60, "2024");
 const bcImgImages = generateImages("bcimg", 32, "Earlier Years");
-const mixedImages = shuffleArray([...bc25Images, ...bcImgImages]).slice(0, 32);
+const mixedImages = shuffleArray([...jbc25Images, ...bc25Images, ...bcImgImages]).slice(0, 40);
 
 /* ================= GRID COMPONENT ================= */
 type GalleryGridProps = {
@@ -78,12 +79,14 @@ const ImageGallery: React.FC = () => {
 
   const sectionMap: Record<SectionType, GalleryImage[]> = {
     mixed: mixedImages,
+    "2025": jbc25Images,
     "2024": bc25Images,
     earlier: bcImgImages,
   };
 
   const sectionTitleMap: Record<SectionType, string> = {
     mixed: "Featured Moments",
+    "2025": "2025 Gallery",
     "2024": "2024 Gallery",
     earlier: "Earlier Years",
   };
@@ -100,14 +103,14 @@ const ImageGallery: React.FC = () => {
       />
 
       {/* Dark Overlay - Behind Content */}
-      <div className="fixed inset-0 -z-10 bg-black/70" />
+      <div className="fixed inset-0 -z-10 bg-indigo-900/90" />
 
       {/* Main Content - Above Everything */}
       <div className="relative min-h-screen text-white">
         <div className="max-w-7xl mx-auto px-6 py-20">
           {/* Section Buttons */}
           <div className="flex flex-wrap gap-4 justify-center mb-16">
-            {(["mixed", "2024", "earlier"] as SectionType[]).map((section) => (
+            {(["mixed", "2025", "2024", "earlier"] as SectionType[]).map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}

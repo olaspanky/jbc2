@@ -33,7 +33,7 @@ export default function SingleNewsPage({ params }: SingleNewsProps) {
           {post.title}
         </h1>
 
-        {/* Meta */}
+        {/* Meta */}  
         <div className="flex gap-4 text-sm text-black mb-8">
           <span>{post.date}</span>
         </div>

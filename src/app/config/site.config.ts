@@ -12,12 +12,24 @@ export const siteConfig = {
         { label: 'Who We Are', href: '/jbc/about?section=whoweare' },
         { label: 'Our History', href: '/jbc/about?section=history' },
         { label: 'Stakeholders & Strategy', href: '/jbc/about?section=stake' },
-        { label: 'Projects & Activities', href: '/jbc/about?section=projects' }
+        { label: 'Projects & Activities', href: '/jbc/about?section=projects' },
       ]
     },
+   
     { label: 'Gallery', href: '/jbc/gallery' },
     { label: 'News', href: '/jbc/blog' },
-    { label: 'Contact', href: '#' }
+    { label: 'Contact', href: '#' },
+     { 
+      label: 'Projects & Activities', 
+      href: '#',
+      dropdown: [
+        { label: '2025 Summit', href: 'https://summit.jbcibadan.org' },
+        { label: 'Bootcamp', href: 'https://summit.jbcibadan.org/bootcamp' },
+    
+      ]
+    },
+
+
   ],
 
   socialLinks: [

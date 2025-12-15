@@ -39,7 +39,10 @@ export const Navigation = ({ navItems, onJoinClick, scrolled = false }: Navigati
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <img src={logo.src} alt="JBC Logo" className="h-10 w-auto" />
+          <a href='/'>
+                    <img src={logo.src} alt="JBC Logo" className="h-10 w-auto" />
+
+          </a>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-8">
