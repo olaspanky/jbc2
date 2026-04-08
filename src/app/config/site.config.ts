@@ -33,10 +33,11 @@ export const siteConfig = {
   ],
 
   socialLinks: [
-    { platform: 'facebook' as const, href: 'https://facebook.com/jbc-ibadan' },
-    { platform: 'twitter' as const, href: 'https://twitter.com/jbc-ibadan' },
-    { platform: 'instagram' as const, href: 'https://instagram.com/jbc-ibadan' },
-    { platform: 'linkedin' as const, href: 'https://linkedin.com/company/jbc-ibadan' }
+    { platform: 'facebook' as const, href: 'https://web.facebook.com/jbcibadan' },
+    { platform: 'twitter' as const, href: 'https://x.com/JbcIbadan' },
+    { platform: 'instagram' as const, href: 'https://www.instagram.com/jbc_ibadan' },
+    { platform: 'linkedin' as const, href: 'http://www.linkedin.com/company/jericho-businessmen-club-ibadan/' },
+    { platform: 'youtube' as const, href: 'https://www.youtube.com/@JerichoBusinessmenclub' }
   ],
 
   footerLinks: {

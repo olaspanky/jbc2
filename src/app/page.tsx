@@ -1,5 +1,6 @@
 'use client';
 
+import Link from "next/link";
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Menu, X, ChevronRight, MapPin, Mail, Phone, 
@@ -45,77 +46,108 @@ export default function JBCIbadan() {
     return () => clearInterval(interval);
   }, []);
 
+  // const heroSlides = [
+  //   {
+  //     title: "Jericho Businessmen Club Ibadan",
+  //     subtitle: "Empowering Professionals, Building Communities",
+  //     description: "A distinguished community of accomplished Sons of Ibadan committed to ethical leadership, economic development, and measurable community impact.",
+  //     image: "/images/j1.jpg"
+  //   },
+  //   {
+  //     title: "Where Professional Excellence Meets Purpose",
+  //     subtitle: "Driving Economic Growth & Development",
+  //     description: "We connect like minded Ibadan Sons across business, finance, technology, and public service to strengthen enterprises, foster strategic partnerships, and advance sustainable development in our home city.",
+  //     image: "/images/j2.jpg"
+  //   },
+  //   {
+  //     title: "Driving Real Impact in Ibadan.",
+  //     subtitle: "Be Part of Something Greater",
+  //     description: "Through policy engagement, youth development, entrepreneurship support, and community initiatives, we contribute actively to economic growth and long term progress.",
+  //     image: "/images/j3.jpg"
+  //   }
+  // ];
+
   const heroSlides = [
     {
       title: "Jericho Businessmen Club Ibadan",
-      subtitle: "Empowering Professionals, Building Communities",
-      description: "Like-minded professionals and technocrats of Ibadan origin for mutual economic development",
-      image: "/images/j1.jpg"
+      subtitle: "",
+      description:
+        "A distinguished community of accomplished Sons of Ibadan committed to ethical leadership, economic development, and measurable community impact.",
+      image: "/images/j1.jpg",
+      cta1: { text: "Learn More", link: "/jbc/about" },
+      cta2: { text: "Join Us Today", link: "/jbc/join-us" }
     },
     {
-      title: "Making Impact Together",
-      subtitle: "Driving Economic Growth & Development",
-      description: "Impacting public policy discourse for the benefit of our people in Ibadan",
-      image: "/images/j2.jpg"
+      title: "Where Professional Excellence Meets Purpose",
+      subtitle: "",
+      description:
+        "We connect like minded Ibadan Sons across business, finance, technology, and public service to strengthen enterprises, foster strategic partnerships, and advance sustainable development in our home city.",
+      image: "/images/j2.jpg",
+      cta1: { text: "Our Story", link: "/jbc/about?section=history" },
+      cta2: { text: "Become a Member", link: "/jbc/join-us" }
     },
     {
-      title: "Join Our Community",
-      subtitle: "Be Part of Something Greater",
-      description: "Connect with fellow professionals and contribute to Ibadan's development",
-      image: "/images/j3.jpg"
+      title: "Driving Real Impact in Ibadan.",
+      subtitle: "",
+      description:
+        "Through policy engagement, youth development, entrepreneurship support, and community initiatives, we contribute actively to economic growth and long term progress.",
+      image: "/images/j3.jpg",
+      cta1: { text: "Explore Our Work", link: "/jbc/initiatives" },
+      cta2: { text: "Upcoming Events", link: "/jbc/events" }
     }
   ];
 
-  const tabs = [
-    { 
-      id: 'aim', 
-      label: 'Aim', 
-      icon: Target,
-      content: "To promote the economic, social, and cultural development of Ibadan and its environs through collaborative efforts of like-minded professionals and technocrats."
-    },
-    { 
-      id: 'vision', 
-      label: 'Vision', 
-      icon: Eye,
-      content: "To be the foremost organization championing sustainable development and economic prosperity for Ibadan and its people."
-    },
-    { 
-      id: 'mission', 
-      label: 'Mission', 
-      icon: Users,
-      content: "To bring together professionals and technocrats of Ibadan origin to foster mutual economic development, influence positive public policy, and create lasting impact in our community."
-    },
-    { 
-      id: 'vow', 
-      label: 'Vow', 
-      icon: Heart,
-      content: "We pledge our unwavering commitment to the development of Ibadan, promising to work tirelessly for the economic empowerment and social advancement of our people."
-    }
-  ];
+  
+  // const tabs = [
+  //   { 
+  //     id: 'aim', 
+  //     label: 'Aim', 
+  //     icon: Target,
+  //     content: "To promote the economic, social, and cultural development of Ibadan and its environs through collaborative efforts of like-minded professionals and technocrats."
+  //   },
+  //   { 
+  //     id: 'vision', 
+  //     label: 'Vision', 
+  //     icon: Eye,
+  //     content: "To be the foremost organization championing sustainable development and economic prosperity for Ibadan and its people."
+  //   },
+  //   { 
+  //     id: 'mission', 
+  //     label: 'Mission', 
+  //     icon: Users,
+  //     content: "To bring together professionals and technocrats of Ibadan origin to foster mutual economic development, influence positive public policy, and create lasting impact in our community."
+  //   },
+  //   { 
+  //     id: 'vow', 
+  //     label: 'Vow', 
+  //     icon: Heart,
+  //     content: "We pledge our unwavering commitment to the development of Ibadan, promising to work tirelessly for the economic empowerment and social advancement of our people."
+  //   }
+  // ];
 
   const initiatives = [
     {
       icon: Activity,
       title: "Health Centres Support",
-      description: "Supporting healthcare infrastructure and services across Ibadan communities",
+      description: "Improving healthcare access across Ibadan communities.",
       link: "/health-centres"
     },
     {
       icon: Award,
       title: "Empowerment Scheme",
-      description: "Established in November 2013 to provide financial support to traders and artisans of Ibadan origin",
+      description: "Strengthening businesses and entrepreneurs for economic growth.",
       link: "/empowerment"
     },
     {
       icon: GraduationCap,
       title: "Scholarship Scheme",
-      description: "Established October 26, 2006. Giving back to society and helping those with genuine educational needs",
+      description: "Supporting promising students to reach their full potential.",
       link: "/scholarship"
     },
     {
       icon: Building2,
       title: "Annual Socio-economic Summit",
-      description: "Bringing together stakeholders to discuss and advance Ibadan's economic development",
+      description: "Driving dialogue and solutions for sustainable development.",
       link: "/summit"
     }
   ];
@@ -181,17 +213,17 @@ export default function JBCIbadan() {
     setExecSlideIndex(prev => Math.min(totalExecSlides - 1, prev + 1));
   };
 
-  useEffect(() => {
-  const interval = setInterval(() => {
-    setActiveTab((current) => {
-      const currentIndex = tabs.findIndex(tab => tab.id === current);
-      const nextIndex = (currentIndex + 1) % tabs.length;
-      return tabs[nextIndex].id;
-    });
-  }, 3000);
+//   useEffect(() => {
+//   const interval = setInterval(() => {
+//     setActiveTab((current) => {
+//       const currentIndex = tabs.findIndex(tab => tab.id === current);
+//       const nextIndex = (currentIndex + 1) % tabs.length;
+//       return tabs[nextIndex].id;
+//     });
+//   }, 3000);
 
-  return () => clearInterval(interval);
-}, [tabs]);
+//   return () => clearInterval(interval);
+// }, [tabs]);
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -200,17 +232,19 @@ export default function JBCIbadan() {
         <div className="absolute inset-0">
           {heroSlides.map((slide, index) => (
             <div
-              key={slide.image} // Critical: Forces re-render of background
+              key={slide.image}
               className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
+                index === currentSlide 
+                  ? 'opacity-100 pointer-events-auto' 
+                  : 'opacity-0 pointer-events-none'   // ← add this
               }`}
-            >
+          >
               {/* Background Image */}
               <div 
                 className="absolute inset-0 bg-cover bg-center bg-gray-200"
                 style={{ backgroundImage: `url(${slide.image})` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent pointer-events-none"></div>
               </div>
               
               {/* Content */}
@@ -227,19 +261,20 @@ export default function JBCIbadan() {
                       {slide.description}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4">
-                      <a 
-                        href="#about" 
-                        className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
-                      >
-                        Learn More
-                        <ChevronRight size={20} className="ml-2" />
-                      </a>
-                      <a 
-                        href="#contact" 
-                        className="bg-white/10 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-lg hover:bg-white hover:text-[#1466ff] transition-all duration-300 font-semibold inline-flex items-center justify-center"
-                      >
-                        Join Us Today
-                      </a>
+                        <Link
+                          href={slide.cta1.link}
+                          className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
+                        >
+                          {slide.cta1.text}
+                          <ChevronRight size={20} className="ml-2" />
+                        </Link>
+
+                        <Link
+                          href={slide.cta2.link}
+                          className="bg-white/10 backdrop-blur-sm text-white border-2 border-white px-8 py-4 rounded-lg hover:bg-white hover:text-[#1466ff] transition-all duration-300 font-semibold inline-flex items-center justify-center"
+                        >
+                          {slide.cta2.text}
+                        </Link>
                     </div>
                   </div>
                 </div>
@@ -269,18 +304,98 @@ export default function JBCIbadan() {
         </div>
       </section>
 
+      {/* Leadership Section */}
+      <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">A Welcome from the President</h2>
+            {/* <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Leadership that inspires growth, excellence, and community impact
+            </p> */}
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden md:flex">
+            <div className="md:w-5/12 relative overflow-hidden bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] p-8 md:p-12 flex items-center justify-center">
+              <img 
+                src="/images/presido.jpg" 
+                alt="JBC President" 
+                className="w-56 h-56 md:w-72 md:h-72 object-cover rounded-full border-4 border-white shadow-lg"
+              />
+              <p className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white font-semibold text-lg">
+                Olooye Adegboyega Taofeek Adegoke
+              </p>
+            </div>
+
+            <div className="md:w-7/12 p-8 md:p-12">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                President, Jericho Businessmen Club Ibadan
+              </h3>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Welcome to Jericho Businessmen Club Ibadan.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Our Club was founded on a clear belief that business leadership must serve a purpose
+                greater than personal success. As accomplished Sons of Ibadan, we understand that
+                influence carries responsibility, and we are committed to using our experience and
+                networks to strengthen economic development and community progress.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Through focused initiatives, strategic partnerships, and constructive engagement, we
+                continue to support education, entrepreneurship, and sustainable growth across
+                Ibadan and Oyo State. We are deliberate in our actions and accountable for our
+                impact.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Jericho Businessmen Club Ibadan is not simply a network. It is a commitment to
+                service, integrity, and lasting contribution.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                I invite you to learn more about our work and the values that guide us.
+              </p>
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Welcome once again
+              </p>
+
+              <a 
+                href="/jbc/president"
+                className="inline-flex items-center bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-6 py-3 rounded-lg font-semibold hover:shadow-xl transition-all duration-300"
+              >
+                See Full Profile
+                <ArrowRight size={18} className="ml-2" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
 
 <section id="about" className="py-20 bg-[#f3f3f3]">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-16">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About JBC Ibadan</h2>
-      <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-        Uniting professionals and technocrats for the economic and social development of Ibadan
+      <p className="text-2xl md:text-2xl font-bold text-gray-900 mb-4">
+        Who we are
       </p>
+      <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+        Jericho Businessmen Club Ibadan unites experienced Sons of Ibadan across diverse
+        professional backgrounds and industries to strengthen businesses, drive economic
+        growth, and advance social progress in Ibadanland. Founded to combine legacy,
+        vision, and action, the Club turns purpose into tangible results for our communities.
+      </p>
+      <a 
+        href="/jbc/about" 
+        className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
+      >
+        Learn More
+        <ChevronRight size={20} className="ml-2" />
+      </a>
     </div>
 
-    <div className="grid lg:grid-cols-4 gap-4 mb-12">
+    {/* <div className="grid lg:grid-cols-4 gap-4 mb-12">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         return (
@@ -319,17 +434,34 @@ export default function JBCIbadan() {
           </div>
         </div>
       ))}
-    </div>
+    </div> */}
   </div>
 </section>
       {/* Initiatives Section */}
       <section id="initiatives" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Initiatives</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Making meaningful impact through targeted programs and community development projects
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Connect and Engage</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10">
+              Our Annual Socio-Economic Summit, Annual General Meeting, and other key events
+              bring together leaders and innovators to collaborate, share insights, and drive
+              progress. Each gathering reflects our commitment to purposeful action and
+              measurable impact.
             </p>
+            <a 
+              href="/jbc/events" 
+              className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
+            >
+              View Events
+              <ChevronRight size={20} className="ml-2" />
+            </a>
+          </div>
+        </div>
+      </section>
+      <section id="initiatives" className="py-20 bg-gray">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Transforming Lives Through Intentional Action</h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -361,7 +493,37 @@ export default function JBCIbadan() {
         </div>
       </section>
 
-      {/* Leadership Section */}
+      {/* Membership Section */}
+      <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+          <h2 className="text-sm font-semibold tracking-widest text-[#1466ff] uppercase mb-4">
+            Membership
+          </h2>
+
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Be Part of Something Greater
+          </h3>
+
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-10 leading-relaxed">
+            Becoming a member of <span className="font-semibold text-gray-900">
+            Jericho Businessmen Club Ibadan</span> means more than networking. 
+            It is a commitment to collaboration, service, and shaping Ibadan’s future, 
+            alongside like-minded vision-oriented sons of the land.
+          </p>
+
+          <Link
+            href="/jbc/join-us"
+            className="inline-flex items-center bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg font-semibold hover:shadow-xl transition-all duration-300"
+          >
+            Become a Member
+            <ArrowRight size={20} className="ml-2" />
+          </Link>
+
+        </div>
+      </section>
+
+      {/* Leadership Section
       <section className="py-20 bg-gradient-to-br from-[#1466ff]/5 to-[#0d4dcc]/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -426,10 +588,10 @@ export default function JBCIbadan() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Executive Committee Slider */}
-      <section id="exco" className="py-20 bg-[#f3f3f3]">
+      {/* <section id="exco" className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Executive Committee</h2>
@@ -495,7 +657,7 @@ export default function JBCIbadan() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* News & Events */}
       <section id="news" className="py-20 bg-white">
@@ -556,7 +718,7 @@ export default function JBCIbadan() {
       </section>
 
       {/* Photo Gallery */}
-      <section className="py-20 bg-[#f3f3f3]">
+      {/* <section className="py-20 bg-[#f3f3f3]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Photos</h2>
@@ -595,7 +757,7 @@ export default function JBCIbadan() {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact CTA */}
       <section id="contact" className="py-20 bg-gradient-to-br from-[#1466ff] to-[#0d4dcc] relative overflow-hidden">
