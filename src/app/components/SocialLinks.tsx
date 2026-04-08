@@ -1,8 +1,9 @@
 // components/SocialLinks.tsx
-import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 
 interface SocialLink {
-  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin';
+  // platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin';
+  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'youtube';
   href: string;
 }
 
@@ -14,7 +15,8 @@ const iconMap = {
   facebook: Facebook,
   twitter: Twitter,
   instagram: Instagram,
-  linkedin: Linkedin
+  linkedin: Linkedin,
+  youtube: Youtube
 };
 
 export const SocialLinks = ({ links }: SocialLinksProps) => {

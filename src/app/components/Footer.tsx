@@ -15,7 +15,7 @@ interface FooterLinks {
 }
 
 interface SocialLink {
-  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin';
+  platform: 'facebook' | 'twitter' | 'instagram' | 'linkedin' | 'youtube';
   href: string;
 }
 
@@ -42,10 +42,32 @@ export const Footer = ({
           <img src={logo.src} alt="JBC Logo" className="h-10 w-auto" />
               <div className="text-white font-bold mt-2">JBC Ibadan</div>
             </div>
-            <p className="text-sm mb-6 leading-relaxed">
+              {/* <p className="text-sm mb-6 leading-relaxed">
               {description}
-            </p>
-            <SocialLinks links={socialLinks} />
+            </p> */}
+
+            <div className="text-sm space-y-2 mb-6">
+              <p>
+                <span className="text-white font-medium">Location:</span><br />
+                NIHORT Road, Jericho, Ibadan, Oyo State, Nigeria
+              </p>
+
+              <p>
+                <span className="text-white font-medium">Email:</span><br />
+                <a href="mailto:info@jbcibadan.org" className="hover:text-white transition">
+                  info@jbcibadan.org
+                </a>
+              </p>
+
+              <p>
+                <span className="text-white font-medium">Phone:</span><br />
+                <a href="tel:+2348020548591" className="hover:text-white transition">
+                  +2348020548591
+                </a>
+              </p>
+          </div>
+
+          <SocialLinks links={socialLinks} />
           </div>
 
           {/* Footer Sections */}
