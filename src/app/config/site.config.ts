@@ -19,6 +19,7 @@ export const siteConfig = {
     { label: 'Gallery', href: '/jbc/gallery' },
     { label: 'News', href: '/jbc/blog' },
     { label: 'Contact', href: '#' },
+    { label: 'Join Us', href: '/jbc/join-us' },
      { 
       label: 'Projects & Activities', 
       href: '#',

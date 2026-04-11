@@ -98,32 +98,32 @@ export default function JBCIbadan() {
   ];
 
   
-  // const tabs = [
-  //   { 
-  //     id: 'aim', 
-  //     label: 'Aim', 
-  //     icon: Target,
-  //     content: "To promote the economic, social, and cultural development of Ibadan and its environs through collaborative efforts of like-minded professionals and technocrats."
-  //   },
-  //   { 
-  //     id: 'vision', 
-  //     label: 'Vision', 
-  //     icon: Eye,
-  //     content: "To be the foremost organization championing sustainable development and economic prosperity for Ibadan and its people."
-  //   },
-  //   { 
-  //     id: 'mission', 
-  //     label: 'Mission', 
-  //     icon: Users,
-  //     content: "To bring together professionals and technocrats of Ibadan origin to foster mutual economic development, influence positive public policy, and create lasting impact in our community."
-  //   },
-  //   { 
-  //     id: 'vow', 
-  //     label: 'Vow', 
-  //     icon: Heart,
-  //     content: "We pledge our unwavering commitment to the development of Ibadan, promising to work tirelessly for the economic empowerment and social advancement of our people."
-  //   }
-  // ];
+  const tabs = [
+    { 
+      id: 'aim', 
+      label: 'Aim', 
+      icon: Target,
+      content: "To promote the economic, social, and cultural development of Ibadan and its environs through collaborative efforts of like-minded professionals and technocrats."
+    },
+    { 
+      id: 'vision', 
+      label: 'Vision', 
+      icon: Eye,
+      content: "To be the foremost organization championing sustainable development and economic prosperity for Ibadan and its people."
+    },
+    { 
+      id: 'mission', 
+      label: 'Mission', 
+      icon: Users,
+      content: "To bring together professionals and technocrats of Ibadan origin to foster mutual economic development, influence positive public policy, and create lasting impact in our community."
+    },
+    { 
+      id: 'vow', 
+      label: 'Vow', 
+      icon: Heart,
+      content: "We pledge our unwavering commitment to the development of Ibadan, promising to work tirelessly for the economic empowerment and social advancement of our people."
+    }
+  ];
 
   const initiatives = [
     {
@@ -213,17 +213,17 @@ export default function JBCIbadan() {
     setExecSlideIndex(prev => Math.min(totalExecSlides - 1, prev + 1));
   };
 
-//   useEffect(() => {
-//   const interval = setInterval(() => {
-//     setActiveTab((current) => {
-//       const currentIndex = tabs.findIndex(tab => tab.id === current);
-//       const nextIndex = (currentIndex + 1) % tabs.length;
-//       return tabs[nextIndex].id;
-//     });
-//   }, 3000);
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setActiveTab((current) => {
+      const currentIndex = tabs.findIndex(tab => tab.id === current);
+      const nextIndex = (currentIndex + 1) % tabs.length;
+      return tabs[nextIndex].id;
+    });
+  }, 3000);
 
-//   return () => clearInterval(interval);
-// }, [tabs]);
+  return () => clearInterval(interval);
+}, [tabs]);
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -395,7 +395,7 @@ export default function JBCIbadan() {
       </a>
     </div>
 
-    {/* <div className="grid lg:grid-cols-4 gap-4 mb-12">
+    <div className="grid lg:grid-cols-4 gap-4 mb-12">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         return (
@@ -434,7 +434,7 @@ export default function JBCIbadan() {
           </div>
         </div>
       ))}
-    </div> */}
+    </div>
   </div>
 </section>
       {/* Initiatives Section */}
@@ -448,20 +448,20 @@ export default function JBCIbadan() {
               progress. Each gathering reflects our commitment to purposeful action and
               measurable impact.
             </p>
-            <a 
+            {/* <a 
               href="/jbc/events" 
               className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
             >
               View Events
               <ChevronRight size={20} className="ml-2" />
-            </a>
+            </a> */}
           </div>
         </div>
-      </section>
-      <section id="initiatives" className="py-20 bg-gray">
+      {/* </section>
+      <section id="initiatives" className="py-20 bg-gray"> */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Transforming Lives Through Intentional Action</h2>
+            <h4 className="text-2xl md:text-2xl font-bold text-gray-900 mb-4 ">Transforming Lives Through Intentional Action</h4>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -490,6 +490,18 @@ export default function JBCIbadan() {
               );
             })}
           </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"></div>
+            <div className="text-center mb-16 mt-6">
+            
+              <a 
+                href="/jbc/events" 
+                className="bg-gradient-to-r from-[#1466ff] to-[#0d4dcc] text-white px-8 py-4 rounded-lg hover:shadow-2xl transition-all duration-300 font-semibold inline-flex items-center justify-center"
+              >
+                View Events
+                <ChevronRight size={20} className="ml-2" />
+              </a>
+            </div>
+            
         </div>
       </section>
 
